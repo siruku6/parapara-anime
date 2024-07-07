@@ -4,14 +4,17 @@
 # --------------------------------------------------------
 import io
 import os
+from typing import Optional
 
-# なくても動いた
+# NOTE: なくても動いた (It is OK, without this module.)
 # from JSAnimation.IPython_display import display_animation
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import plotly
 from IPython.display import HTML
 from matplotlib import animation
+from PIL import Image
 from pyvirtualdisplay import Display
 
 display = Display(visible=0, size=(1024, 768))
@@ -101,7 +104,7 @@ def save_as_gif(frames: list[np.ndarray], filename: str, interval: int = 50) -> 
 
 def to_numpy(fig: plt.Figure) -> np.ndarray:
     """
-    Convert Figure into numpy array
+    Convert Figure made with matplotlib into numpy array
 
     Parameters
     ------
@@ -131,3 +134,20 @@ def to_numpy(fig: plt.Figure) -> np.ndarray:
 
     io_buf.close()
     return img_arr
+
+
+def plotly_fig2array(
+    fig: plotly.graph_objs.Figure,
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+) -> np.ndarray:
+    """
+    Convert Figure made with plotly into numpy array
+    """
+    if (width is not None) and (height is not None):
+        fig_bytes = fig.to_image(format="png", width=width, height=height)
+    else:
+        fig_bytes = fig.to_image(format="png")
+    buf = io.BytesIO(fig_bytes)
+    img = Image.open(buf)
+    return np.asarray(img)
