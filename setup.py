@@ -23,8 +23,10 @@ PYTHON_REQUIRES = ">=3.8"
 
 INSTALL_REQUIRES = [
     "IPython>=7.23.1",
+    "kaleido>=0.2.0",
     "matplotlib>=3.0.0",
     "numpy>=1.15",
+    "plotly>=5.0",
     "pyvirtualdisplay>=3.0",
     "tqdm>=4.66.0",
 ]
