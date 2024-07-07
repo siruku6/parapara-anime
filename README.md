@@ -1,4 +1,7 @@
 # parapara-anime
+
+[![Lint and Pytest](https://github.com/siruku6/parapara-anime/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/siruku6/parapara-anime/actions/workflows/lint_and_test.yml)
+
 This is a helper for creating a movie of a series of images... Like this!
 
 <!-- The sample image for a behavior of this tool -->
