@@ -21,7 +21,7 @@ display.start()
 os.environ["DISPLAY"] = f":{display.display}"
 
 
-def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
+def _make_anim(frames: np.ndarray, interval: int = 50) -> animation.FuncAnimation:
     plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0), dpi=72)
     patch: matplotlib.image.AxesImage = plt.imshow(frames[0])
     plt.axis("off")
@@ -30,7 +30,7 @@ def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
         patch.set_data(frames[i])
 
     anim: animation.FuncAnimation = animation.FuncAnimation(
-        plt.gcf(), animate, frames=len(frames), interval=50
+        plt.gcf(), animate, frames=len(frames), interval=interval
     )
     return anim
 

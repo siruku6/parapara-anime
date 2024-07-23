@@ -1,5 +1,5 @@
 import os
-from typing import Iterable
+from typing import Any, Iterable
 import matplotlib.pyplot as plt
 import pytest
 import numpy as np
@@ -36,7 +36,7 @@ class TestToNumpy:
         assert np_image.shape[2] in [3, 4]
 
     @pytest.fixture(name="expected_nparray")
-    def fixture_expected_nparray(self, request) -> Iterable:
+    def fixture_expected_nparray(self, request: Any) -> Iterable:
         """
         Load the expected numpy array from the file
 
