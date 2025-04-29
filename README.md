@@ -20,7 +20,7 @@ This is a helper for creating a movie of a series of images... Like this!
 - `Xvfb`  
 The package `xvfb` is required to use this tool. So please install it like this.
     ```bash
-    # Linux
+    # Ubuntu
     $ apt -y install --no-install-recommends xvfb
     ```
     Otherwise, you will see the following error...
@@ -32,6 +32,11 @@ The package `xvfb` is required to use this tool. So please install it like this.
 
     FileNotFoundError: [Errno 2] No such file or directory: 'Xvfb'
     ```
+
+
+## Usage
+
+- Please, refer to the sample codes in [these notebooks](/notebooks).
 
 
 ## Contributing

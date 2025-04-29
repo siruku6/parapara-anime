@@ -1,5 +1,5 @@
-from setuptools import setup
 import parapara
+from setuptools import setup
 
 DESCRIPTION = (
     "parapara-anime: This is a helper for creating a movie of a series of images."
@@ -18,6 +18,7 @@ INSTALL_REQUIRES = [
     "matplotlib>=3.0.0",
     "numpy>=1.15",
     "pyvirtualdisplay>=3.0",
+    "tqdm>=4.66.0",
 ]
 EXTRAS_REQUIRE = {
     "tutorial": [],
@@ -37,6 +38,7 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Framework :: Matplotlib",
