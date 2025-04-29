@@ -1,6 +1,6 @@
 # Docker image
 # https://hub.docker.com/layers/library/python/3.10.12-slim/images/sha256-0549f89d5387b0df640f136594a1db3a2aaa8cfbf351ec988d07325f8997b77a?context=explore
-FROM python:3.11.9-slim
+FROM python:3.12.10-slim
 
 RUN apt -y update && apt -y upgrade
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -9,10 +9,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     gcc g++ libc-dev \
     # For development and debug (procps: `free -h`)
     bash curl git net-tools vim procps \
-    # # For scikit-learn (scipy)
-    # gfortran libopenblas-dev liblapack-dev \
-    # # For opencv-python
-    # libopencv-dev \
     # For pyvirtualdisplay, gym-notebook-wrapper
     xvfb \
     # # For mpi4py

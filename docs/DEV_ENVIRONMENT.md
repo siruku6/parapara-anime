@@ -39,3 +39,22 @@
     - Then, you can access the Jupyter Notebook server at `http://localhost:{JUPYTER_PORT}`.
     - `JUPYTER_PORT` is specified in the `.env` file.
     - The default **password** of the Jupyter Notebook server is `demo` which is also specified in the `.env` file.
+
+6. Import `parapara`
+
+- You can load this library like this.
+
+    ```bash
+    docker compose exec python-env bash
+    # python
+
+    >>> import parapara
+    >>>
+    ```
+
+- Of course, you can also use it in Jupyter Notebook.
+
+    ```
+    # In Jupyter Notebook, this is OK !
+    import parapara
+    ```
