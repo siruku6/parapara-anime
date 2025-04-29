@@ -4,17 +4,15 @@
 # --------------------------------------------------------
 import io
 import os
-from IPython.display import HTML
 
 # なくても動いた
 # from JSAnimation.IPython_display import display_animation
-
 import matplotlib
-from matplotlib import animation
 import matplotlib.pyplot as plt
 import numpy as np
+from IPython.display import HTML
+from matplotlib import animation
 from pyvirtualdisplay import Display
-
 
 display = Display(visible=0, size=(1024, 768))
 display.start()
@@ -32,6 +30,10 @@ def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
     anim: animation.FuncAnimation = animation.FuncAnimation(
         plt.gcf(), animate, frames=len(frames), interval=50
     )
+
+    # This suppresses the display figure on the notebook
+    plt.close()
+
     return anim
 
 
