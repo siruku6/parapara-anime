@@ -1,5 +1,13 @@
-import parapara
 from setuptools import setup
+
+
+def get_version() -> str:
+    version: dict[str, str] = {"__name__": "__not_main__"}
+    with open("parapara/version.py") as fp:
+        exec(fp.read(), version)
+
+    return version["__version__"]
+
 
 DESCRIPTION = (
     "parapara-anime: This is a helper for creating a movie of a series of images."
@@ -10,7 +18,7 @@ AUTHOR_EMAIL = "sirukufarios@gmail.com"
 URL = "https://github.com/siruku6/parapara-anime"
 LICENSE = "MIT License"
 DOWNLOAD_URL = "https://github.com/siruku6/parapara-anime"
-VERSION = parapara.__version__
+VERSION = get_version()
 PYTHON_REQUIRES = ">=3.8"
 
 INSTALL_REQUIRES = [

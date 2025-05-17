@@ -1,3 +1,3 @@
 from .generator import *
 
-__version__: str = "0.0.2"
+# The version of parapara is written in `parapara/version.py`.
