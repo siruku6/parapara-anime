@@ -22,7 +22,7 @@ VERSION = get_version()
 PYTHON_REQUIRES = ">=3.8"
 
 INSTALL_REQUIRES = [
-    "IPython>=8.0.0",
+    "IPython>=7.23.1",
     "matplotlib>=3.0.0",
     "numpy>=1.15",
     "pyvirtualdisplay>=3.0",
