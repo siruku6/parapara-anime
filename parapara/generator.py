@@ -19,7 +19,24 @@ display.start()
 os.environ["DISPLAY"] = f":{display.display}"
 
 
-def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
+def _make_anim(frames: np.ndarray, interval: int) -> animation.FuncAnimation:
+    """
+    Convert a series of numpy-array-images into an animation
+    np.ndarray 型で表現された複数の画像を、アニメーションへと変換する
+
+    Parameters
+    ------
+    frames: list[np.ndarray]
+        List of numpy-array-images
+    interval: int
+        Interval between frames in milliseconds
+
+    Returns
+    ------
+    anim: matplotlib.animation.FuncAnimation
+        Animation object
+    """
+
     plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0), dpi=72)
     patch: matplotlib.image.AxesImage = plt.imshow(frames[0])
     plt.axis("off")
@@ -28,7 +45,7 @@ def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
         patch.set_data(frames[i])
 
     anim: animation.FuncAnimation = animation.FuncAnimation(
-        plt.gcf(), animate, frames=len(frames), interval=50
+        plt.gcf(), animate, frames=len(frames), interval=interval
     )
 
     # This suppresses the display figure on the notebook
@@ -37,22 +54,47 @@ def _make_anim(frames: np.ndarray) -> animation.FuncAnimation:
     return anim
 
 
-def play_anim(frames: list[np.ndarray]) -> HTML:
+def play_anim(frames: list[np.ndarray], interval: int = 50) -> HTML:
     """
     Convert a series of numpy-array-images into an animation for displaying on jupyter notebook
-
     np.ndarray 型で表現された複数の画像を、jupyter notebook で描画可能な一連のアニメーションへと変換する
+
+    Parameters
+    ------
+    frames: list[np.ndarray]
+        List of numpy-array-images
+    interval: int
+        Interval between frames in milliseconds
+
+    Returns
+    ------
+    HTML
+        Animation object
     """
-    jshtml: str = _make_anim(frames).to_jshtml()
+    jshtml: str = _make_anim(frames, interval).to_jshtml()
     return HTML(jshtml)
 
 
-def save_as_gif(frames: list[np.ndarray], filename: str) -> str:
+def save_as_gif(frames: list[np.ndarray], filename: str, interval: int = 50) -> str:
     """
     Save a list of frames as a gif
+    np.ndarray 型で表現された複数の画像を、GIF 形式で保存する
+
+    Parameters
+    ------
+    frames: list[np.ndarray]
+        List of numpy-array-images
+    filename: str
+        Filename to save the gif (without extension !)
+    interval: int
+        Interval between frames in milliseconds
+
+    Returns
+    ------
+    str
     """
 
-    anim: animation.FuncAnimation = _make_anim(frames)
+    anim: animation.FuncAnimation = _make_anim(frames, interval=interval)
     anim.save(filename + ".gif")
     return anim.to_jshtml()
 
