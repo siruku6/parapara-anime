@@ -4,6 +4,7 @@
 # --------------------------------------------------------
 import io
 import os
+from typing import Optional
 
 # なくても動いた
 # from JSAnimation.IPython_display import display_animation
@@ -13,6 +14,8 @@ import numpy as np
 from IPython.display import HTML
 from matplotlib import animation
 from pyvirtualdisplay import Display
+
+from parapara.components.progress_display import ProgressDisplay
 
 display = Display(visible=0, size=(1024, 768))
 display.start()
@@ -75,7 +78,12 @@ def play_anim(frames: list[np.ndarray], interval: int = 50) -> HTML:
     return HTML(jshtml)
 
 
-def save_as_gif(frames: list[np.ndarray], filename: str, interval: int = 50) -> str:
+def save_as_gif(
+    frames: list[np.ndarray],
+    filename: str,
+    interval: int = 50,
+    save_dir: Optional[str] = None,
+) -> None:
     """
     Save a list of frames as a gif
     np.ndarray 型で表現された複数の画像を、GIF 形式で保存する
@@ -91,12 +99,19 @@ def save_as_gif(frames: list[np.ndarray], filename: str, interval: int = 50) -> 
 
     Returns
     ------
-    str
+    None
     """
 
+    # プログレスバーのコールバック関数を取得
+    prog_disp: ProgressDisplay = ProgressDisplay(n_frames=len(frames))
+    progress_callback = prog_disp.progress_callback
+
+    save_path: str = os.path.join(save_dir, filename) if save_dir else filename
+
     anim: animation.FuncAnimation = _make_anim(frames, interval=interval)
-    anim.save(filename + ".gif")
-    return anim.to_jshtml()
+    anim.save(save_path + ".gif", writer="pillow", progress_callback=progress_callback)
+    print("[INFO] Animation is saved as", save_path + ".gif")
+    # return anim.to_jshtml()
 
 
 def to_numpy(fig: plt.Figure) -> np.ndarray:
