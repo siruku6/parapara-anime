@@ -11,6 +11,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     bash curl git net-tools vim procps \
     # For pyvirtualdisplay, gym-notebook-wrapper
     xvfb \
+    # For creating mp4 file with matplotlib.animation.FFMpegWriter
+    ffmpeg \
     # # For mpi4py
     # cmake libopenmpi-dev zlib1g-dev \
     && apt clean \
