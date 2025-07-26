@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 def get_version() -> str:
@@ -35,7 +35,7 @@ TEST_REQUIRES = [
     "pytest>=3",
 ]
 
-PACKAGES = ["parapara"]
+PACKAGES = find_packages()
 
 CLASSIFIERS = [
     # NOTE: Refer to this link, https://e-tec-memo.herokuapp.com/article/177/
