@@ -32,7 +32,21 @@ The package `xvfb` is required to use this tool. So please install it like this.
 
     FileNotFoundError: [Errno 2] No such file or directory: 'Xvfb'
     ```
+- `ffmpeg` (Optional)
+If you want to save a movie as `mp4`, you need to install `ffmpeg` as well.
+    ```bash
+    # Ubuntu
+    $ apt -y install --no-install-recommends ffmpeg
+    ```
+    Otherwise, you will see the following error...
+    ```python
+    >>> import parapara
+    Traceback (most recent call last):
 
+    ...
+
+    FileNotFoundError: [Errno 2] No such file or directory: 'ffmpeg'
+    ```
 
 ## Usage
 

@@ -16,6 +16,7 @@ from matplotlib import animation
 from pyvirtualdisplay import Display
 
 from parapara.components.progress_display import ProgressDisplay
+from parapara.components.validation import check_package_existence
 
 display = Display(visible=0, size=(1024, 768))
 display.start()
@@ -78,6 +79,46 @@ def play_anim(frames: list[np.ndarray], interval: int = 50) -> HTML:
     return HTML(jshtml)
 
 
+def _save(
+    frames: list[np.ndarray],
+    filename: str,
+    extension: str,
+    interval: int = 50,
+    fps: int = 30,
+    save_dir: Optional[str] = None,
+) -> bool:
+    """
+    Returns
+    ------
+    bool
+        True if the saving was successful, False otherwise
+    """
+    if save_dir and not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    # プログレスバーのコールバック関数を取得
+    prog_disp: ProgressDisplay = ProgressDisplay(n_frames=len(frames))
+    progress_callback = prog_disp.progress_callback
+
+    save_path: str = os.path.join(save_dir, filename) if save_dir else filename
+    save_path += f".{extension}"
+
+    anim: animation.FuncAnimation = _make_anim(frames, interval=interval)
+
+    if extension == "gif":
+        writer: str = "pillow"
+        fps = None  # type: ignore
+    elif extension == "mp4":
+        writer = "ffmpeg"
+    else:
+        print("[ERROR] Unsupported file format. Use 'gif' or 'mp4'.")
+        return False
+
+    anim.save(save_path, writer=writer, fps=fps, progress_callback=progress_callback)
+    print("[INFO] Animation is saved as", save_path)
+    return True
+
+
 def save_as_gif(
     frames: list[np.ndarray],
     filename: str,
@@ -102,16 +143,47 @@ def save_as_gif(
     None
     """
 
-    # プログレスバーのコールバック関数を取得
-    prog_disp: ProgressDisplay = ProgressDisplay(n_frames=len(frames))
-    progress_callback = prog_disp.progress_callback
+    result: bool = _save(
+        frames,
+        filename,
+        extension="gif",
+        interval=interval,
+        save_dir=save_dir,
+    )
 
-    save_path: str = os.path.join(save_dir, filename) if save_dir else filename
 
-    anim: animation.FuncAnimation = _make_anim(frames, interval=interval)
-    anim.save(save_path + ".gif", writer="pillow", progress_callback=progress_callback)
-    print("[INFO] Animation is saved as", save_path + ".gif")
-    # return anim.to_jshtml()
+def save_as_mp4(
+    frames: list[np.ndarray],
+    filename: str,
+    fps: int = 20,
+    save_dir: Optional[str] = None,
+) -> None:
+    """
+    Save a list of frames as a mp4
+    np.ndarray 型で表現された複数の画像を、MP4 形式で保存する
+
+    Parameters
+    ------
+    frames: list[np.ndarray]
+        List of numpy-array-images
+    filename: str
+        Filename to save the mp4 (without extension !)
+    fps: int
+        Frames per second for the video
+
+    Returns
+    ------
+    None
+    """
+    check_package_existence("ffmpeg")
+
+    result: bool = _save(
+        frames,
+        filename,
+        extension="mp4",
+        fps=fps,
+        save_dir=save_dir,
+    )
 
 
 def to_numpy(fig: plt.Figure) -> np.ndarray:
