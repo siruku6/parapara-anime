@@ -11,8 +11,7 @@ class ProgressDisplay:
         )
 
     def _progress_callback(self, current_frame: int, total_frames: int) -> None:
-        self.progress_bar.n = current_frame + 1
-        self.progress_bar.refresh()
+        self.progress_bar.update(current_frame + 1 - self.progress_bar.n)
         if current_frame + 1 == total_frames:
             self.progress_bar.close()
 
